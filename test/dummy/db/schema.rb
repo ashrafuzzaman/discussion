@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501095144) do
+ActiveRecord::Schema.define(:version => 20130501154803) do
 
   create_table "discussion_concerns", :force => true do |t|
     t.integer  "user_id"
@@ -45,8 +45,10 @@ ActiveRecord::Schema.define(:version => 20130501095144) do
   create_table "discussion_threads", :force => true do |t|
     t.string   "subject"
     t.integer  "initiator_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "last_posted_at"
+    t.integer  "total_messages_post", :default => 0
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   add_index "discussion_threads", ["initiator_id"], :name => "index_discussion_threads_on_initiator_id"

@@ -1,0 +1,37 @@
+<h1>Listing threads</h1>
+
+<%= search_form_for @search, remote: true do |f| %>
+    <div class="field">
+      <%= f.text_field :subject_cont, placeholder: 'Subject' %>
+    </div>
+    <div class="actions"><%= f.submit "Search" %></div>
+<% end %>
+
+<table>
+  <tr>
+    <th>Subject</th>
+    <th>Initiator</th>
+    <th><%= sort_link(@search, :created_at, "Initiated on", {}, {remote: true}) %></th>
+    <th><%= sort_link(@search, :last_posted_at, "Last post at", {}, {remote: true}) %></th>
+    <th><%= sort_link(@search, :total_messages_post, "Total messages post", {}, {remote: true}) %></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @threads.each do |thread| %>
+      <tr>
+        <td><%= thread.subject.truncate(80, :omission => "... (continued)") %></td>
+        <td><%= thread.initiator.try(:email) %></td>
+        <td><%= thread.created_at %></td>
+        <td><%= thread.last_posted_at %></td>
+        <td><%= thread.total_messages_post %></td>
+        <td><%= link_to 'Show', thread, remote: true %></td>
+        <td><%= link_to 'Destroy', thread, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+  <% end %>
+</table>
+
+<%= paginate @threads, remote: true %>
+<br/>
+
+<%= link_to 'New Thread', new_thread_path, remote: true %>

@@ -1,6 +1,8 @@
 module Discussion
   class Thread < ActiveRecord::Base
-    attr_accessible :subject, :messages_attributes, :messages
+    attr_accessible :subject, :messages_attributes
+    validates :subject, presence: true
+
     belongs_to :initiator, class_name: 'User'
     has_many :messages, :class_name => 'Discussion::Message', :inverse_of => :thread
 
@@ -18,6 +20,8 @@ module Discussion
     #scope :unread_by, ->(user) {
     #  select("DISTINCT *").joins(:messages => :message_reads).where('discussion_message_reads.user_id = ?', user.id)
     #}
+
+    scope :order_by_recent, order('discussion_threads.last_posted_at DESC')
 
     scope :concerns_with, ->(user) {
       joins('LEFT OUTER JOIN discussion_concerns ON discussion_concerns.thread_id = discussion_threads.id').

@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Subject:</b>
+  <%= @thread.subject %>
+</p>
+
+<p>
+  <b>Initiator:</b>
+  <%= @thread.initiator.try(:email) %>
+</p>
+
+<%= render :partial => "discussion/messages/view", collection: @thread.messages, as: 'message' %>
+
+<%= simple_form_for([@thread, @thread.messages.build], remote: true) do |f| %>
+    <%= f.error_notification %>
+    <%= render :partial => "discussion/messages/form", locals: {f: f} %>
+
+    <div class="form-actions">
+      <%= link_to "Cancel", threads_path, remote: true %> <%= f.submit %>
+    </div>
+<% end %>

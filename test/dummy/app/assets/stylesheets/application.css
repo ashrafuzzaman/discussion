@@ -11,3 +11,9 @@
  *= require_self
  *= require_tree .
  */
+div.unread {
+    color: blue !important;
+}
+div.read {
+    color: #666666 !important;
+}

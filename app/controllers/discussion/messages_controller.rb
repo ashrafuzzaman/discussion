@@ -2,6 +2,7 @@ require_dependency "discussion/application_controller"
 
 module Discussion
   class MessagesController < InheritedResources::Base
+    respond_to :html, :xml, :json, :js
     include InheritedResources::DSL
 
     nested_belongs_to :thread, parent_class: Discussion::Thread

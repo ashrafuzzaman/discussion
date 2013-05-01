@@ -1,4 +1,6 @@
-<%= simple_form_for(@thread) do |f| %>
+<h1>New thread</h1>
+
+<%= simple_form_for(@thread, remote: true) do |f| %>
     <%= f.error_notification %>
 
     <%= field_set_tag do %>

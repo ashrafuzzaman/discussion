@@ -1,23 +1,3 @@
-<h1>Listing threads</h1>
-
-<table>
-  <tr>
-    <th>Subject</th>
-    <th>Initiator</th>
-    <th></th>
-    <th></th>
-  </tr>
-
-  <% @threads.each do |thread| %>
-      <tr>
-        <td><%= thread.subject %></td>
-        <td><%= thread.initiator_id %></td>
-        <td><%= link_to 'Show', thread %></td>
-        <td><%= link_to 'Destroy', thread, method: :delete, data: {confirm: 'Are you sure?'} %></td>
-      </tr>
-  <% end %>
-</table>
-
-<br/>
-
-<%= link_to 'New Thread', new_thread_path %>
+<div id="discussion_block">
+  <%= render :partial => "discussion/threads/list" %>
+</div>

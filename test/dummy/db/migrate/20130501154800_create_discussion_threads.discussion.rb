@@ -4,6 +4,8 @@ class CreateDiscussionThreads < ActiveRecord::Migration
     create_table :discussion_threads do |t|
       t.string :subject
       t.integer :initiator_id
+      t.datetime :last_posted_at
+      t.integer :total_messages_post, default: 0
 
       t.timestamps
     end

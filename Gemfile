@@ -10,8 +10,10 @@ gem 'jquery-rails'
 gem 'simple_form'
 gem 'inherited_resources'
 gem 'kaminari'
+gem 'ransack'
 
 gem 'awesome_print', group: :development
+gem 'lorem_ipsum_amet', group: :development
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
