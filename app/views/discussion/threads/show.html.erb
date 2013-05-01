@@ -17,6 +17,6 @@
     <%= render :partial => "discussion/messages/form", locals: {f: f} %>
 
     <div class="form-actions">
-      <%= link_to "Cancel", :back %> <%= f.submit %>
+      <%= link_to "Cancel", threads_path %> <%= f.submit %>
     </div>
 <% end %>

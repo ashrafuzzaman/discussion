@@ -9,8 +9,14 @@ module Discussion
 
     accepts_nested_attributes_for :messages
 
+    # use the count with distinct: true as following
+    # Discussion::Thread.read_by(User.first).count(distinct: true)
+    scope :read_by, ->(user) {
+      select("DISTINCT *").joins(:messages => :message_reads).where('discussion_message_reads.user_id = ?', user.id)
+    }
+
     #scope :unread_by, ->(user) {
-    #  joins(:message_recipients).where('messages_recipients.user_id = ? AND messages_recipients.read_at is NULL', user.id)
+    #  select("DISTINCT *").joins(:messages => :message_reads).where('discussion_message_reads.user_id = ?', user.id)
     #}
   end
 end
