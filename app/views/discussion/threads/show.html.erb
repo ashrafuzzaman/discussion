@@ -7,7 +7,7 @@
 
 <p>
   <b>Initiator:</b>
-  <%= @thread.initiator.try(:name) %>
+  <%= @thread.initiator.try(:email) %>
 </p>
 
 <%= render :partial => "discussion/messages/view", collection: @thread.messages, as: 'message' %>

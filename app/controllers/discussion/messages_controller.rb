@@ -10,5 +10,12 @@ module Discussion
     create! do |success, failure|
       success.html { redirect_to @thread }
     end
+
+    private
+    def build_resource
+      super
+      @message.author = current_user
+      @message
+    end
   end
 end
