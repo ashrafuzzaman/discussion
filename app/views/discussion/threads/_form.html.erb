@@ -3,6 +3,9 @@
 
     <%= field_set_tag do %>
         <%= f.input :subject %>
+        <%= f.simple_fields_for :messages, [@thread.messages.build] do |mf| %>
+            <%= render :partial => "discussion/messages/form", locals: {f: mf} %>
+        <% end %>
     <% end %>
 
     <div class="form-actions">

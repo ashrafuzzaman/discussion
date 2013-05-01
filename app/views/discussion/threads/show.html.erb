@@ -7,9 +7,23 @@
 
 <p>
   <b>Initiator:</b>
-  <%= @thread.initiator_id %>
+  <%= @thread.initiator.try(:name) %>
 </p>
 
+<%= render :partial => "discussion/messages/view", collection: @thread.messages, as: 'message' %>
 
-<%= link_to 'Edit', edit_thread_path(@thread) %> |
+<%= simple_form_for(@thread) do |f| %>
+    <%= f.error_notification %>
+
+    <%= field_set_tag do %>
+        <%= f.simple_fields_for :messages, [@thread.messages.build] do |mf| %>
+            <%= render :partial => "discussion/messages/form", locals: {f: mf} %>
+        <% end %>
+    <% end %>
+
+    <div class="form-actions">
+      <%= link_to "Cancel", :back %>  <%= f.submit %>
+    </div>
+<% end %>
+
 <%= link_to 'Back', threads_path %>

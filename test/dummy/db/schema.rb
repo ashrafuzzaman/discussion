@@ -11,7 +11,36 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501075437) do
+ActiveRecord::Schema.define(:version => 20130501095144) do
+
+  create_table "discussion_concerns", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "thread_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "discussion_concerns", ["thread_id"], :name => "index_discussion_concerns_on_thread_id"
+  add_index "discussion_concerns", ["user_id"], :name => "index_discussion_concerns_on_user_id"
+
+  create_table "discussion_message_reads", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "message_id"
+    t.datetime "read_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "discussion_messages", :force => true do |t|
+    t.integer  "author_id"
+    t.integer  "thread_id"
+    t.text     "body"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "discussion_messages", ["author_id"], :name => "index_discussion_messages_on_author_id"
+  add_index "discussion_messages", ["thread_id"], :name => "index_discussion_messages_on_thread_id"
 
   create_table "discussion_threads", :force => true do |t|
     t.string   "subject"
