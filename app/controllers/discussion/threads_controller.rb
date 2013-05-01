@@ -8,6 +8,7 @@ module Discussion
     def build_resource
       super
       @thread.initiator = current_user
+      @thread.messages.each { |m| m.author ||= current_user }
       @thread
     end
   end

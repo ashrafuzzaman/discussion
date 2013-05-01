@@ -4,7 +4,7 @@ module Discussion
     validates :author_id, presence: true
 
     belongs_to :author, :class_name => 'User'
-    belongs_to :thread, :class_name => 'Discussion::Thread'
+    belongs_to :thread, :class_name => 'Discussion::Thread', :inverse_of => :messages
     has_many :message_reads, :class_name => 'Discussion::MessageRead'
 
     def read_by?(user)
