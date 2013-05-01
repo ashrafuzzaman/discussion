@@ -9,6 +9,8 @@ gemspec
 gem 'jquery-rails'
 gem 'simple_form'
 gem 'inherited_resources'
+gem 'kaminari'
+
 gem 'awesome_print', group: :development
 
 # Declare any dependencies that are still in development here instead of in
