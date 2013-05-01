@@ -15,17 +15,18 @@
     <th><%= sort_link(@search, :last_posted_at, "Last post at", {}, {remote: true}) %></th>
     <th><%= sort_link(@search, :total_messages_post, "Total messages post", {}, {remote: true}) %></th>
     <th></th>
-    <th></th>
   </tr>
 
   <% @threads.each do |thread| %>
-      <tr>
-        <td><%= thread.subject.truncate(80, :omission => "... (continued)") %></td>
+      <tr class="thread <%= thread.read_by?(current_user) ? 'read' : 'unread' %>">
+        <td>
+          <span class="counter">(<%= thread.number_of_unread_messages_by(current_user) %>)</span>
+          <%= link_to thread.subject.truncate(80, :omission => "... (continued)"), thread, remote: true %>
+        </td>
         <td><%= thread.initiator.try(:email) %></td>
         <td><%= thread.created_at %></td>
         <td><%= thread.last_posted_at %></td>
         <td><%= thread.total_messages_post %></td>
-        <td><%= link_to 'Show', thread, remote: true %></td>
         <td><%= link_to 'Destroy', thread, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
   <% end %>

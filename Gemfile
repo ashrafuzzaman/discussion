@@ -12,8 +12,12 @@ gem 'inherited_resources'
 gem 'kaminari'
 gem 'ransack'
 
-gem 'awesome_print', group: :development
-gem 'lorem_ipsum_amet', group: :development
+group :development do
+  gem 'awesome_print'
+  gem 'lorem_ipsum_amet'
+  gem 'bullet'
+  gem 'rack-mini-profiler'
+end
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
