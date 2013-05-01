@@ -1,0 +1,11 @@
+<%= simple_form_for(@thread) do |f| %>
+    <%= f.error_notification %>
+
+    <%= field_set_tag do %>
+        <%= f.input :subject %>
+    <% end %>
+
+    <div class="form-actions">
+      <%= link_to "Cancel", :back %>  <%= f.submit %>
+    </div>
+<% end %>

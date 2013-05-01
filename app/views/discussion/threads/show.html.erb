@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Subject:</b>
+  <%= @thread.subject %>
+</p>
+
+<p>
+  <b>Initiator:</b>
+  <%= @thread.initiator_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_thread_path(@thread) %> |
+<%= link_to 'Back', threads_path %>
