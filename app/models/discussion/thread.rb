@@ -7,34 +7,36 @@ module Discussion
     has_many :messages, :class_name => 'Discussion::Message', :inverse_of => :thread
 
     has_many :concerns, class_name: 'Discussion::Concerns'
-    has_many :concern_users, class_name: 'User', through: :concerns
+    has_many :concern_users, :through => :concerns, :source => Discussion.user_class.underscore.to_sym
+
+    has_many :thread_reads, :class_name => 'Discussion::ThreadRead'
 
     accepts_nested_attributes_for :messages
+    before_create :add_initiator_to_concerns
 
     # use the count with distinct: true as following
     # Discussion::Thread.read_by(User.first).count(distinct: true)
+    scope :by_user_and_status, ->(user, read) {
+      joins(:thread_reads).where('discussion_thread_reads.user_id = ? AND discussion_thread_reads.read = ?', user.id, read)
+    }
+
     scope :read_by, ->(user) {
-      select("DISTINCT *").joins(:messages => :message_reads).where('discussion_message_reads.user_id = ?', user.id)
+      by_user_and_status(user, true)
     }
 
     scope :unread_by, ->(user) {
-      select("DISTINCT *").joins('LEFT OUTER JOIN discussion_concerns ON discussion_concerns.thread_id = discussion_threads.id').
-          where('discussion_message_reads.user_id = ?', user.id)
+      by_user_and_status(user, false)
     }
 
     scope :order_by_recent, order('discussion_threads.last_posted_at DESC')
 
     scope :concerns_with, ->(user) {
-      joins('LEFT OUTER JOIN discussion_concerns ON discussion_concerns.thread_id = discussion_threads.id').
-          where('discussion_concerns.user_id=:user_id OR discussion_threads.initiator_id=:user_id', user_id: user.id)
+      joins(:concerns).where('discussion_concerns.user_id=?', user.id)
     }
     scope :sent_item_for, ->(user) { where(initiator_id: user.id) }
 
     def read_by?(user)
-      number_of_unread_messages_by(user) == 0
-    end
-
-    def self.total_unread_by(user)
+      self.thread_reads.by(user).where(read: false).count == 0
     end
 
     def number_of_read_messages_by(user)
@@ -43,7 +45,12 @@ module Discussion
     end
 
     def number_of_unread_messages_by(user)
-      total_messages_post - number_of_read_messages_by(user)
+      self.total_messages_post - number_of_read_messages_by(user)
+    end
+
+    private
+    def add_initiator_to_concerns
+      self.concern_users << self.initiator
     end
   end
 end

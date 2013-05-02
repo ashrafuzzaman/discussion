@@ -1,11 +1,15 @@
 p "Seeding ...."
+
 def rand_user
-  User.all[Random.rand(3)]
+  User.all[Random.rand(6)]
 end
 
 User.create!(email: 'ashraf@gmail.com')
 User.create!(email: 'zahid@gmail.com')
 User.create!(email: 'rumjhum@gmail.com')
+User.create!(email: 'himika@gmail.com')
+User.create!(email: 'bzaman@gmail.com')
+User.create!(email: 'mamataz@gmail.com')
 
 1.upto(100) do
   subject = LoremIpsum.lorem_ipsum(words: 20)

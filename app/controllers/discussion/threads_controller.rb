@@ -20,7 +20,8 @@ module Discussion
     end
 
     def collection
-      @threads ||= end_of_association_chain.concerns_with(current_user).order_by_recent.includes(:initiator).page(params[:page])
+      @threads ||= end_of_association_chain.concerns_with(current_user).order_by_recent.
+          includes(:initiator).page(params[:page])
       @search = @threads.search(params[:q])
       @threads = @search.result
     end
