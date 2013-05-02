@@ -13,11 +13,11 @@ module Discussion
       my_message_reads = self.message_reads.where(user_id: user.id, message_id: self.id)
       message_read = my_message_reads.first || my_message_reads.new
       message_read.read_at ||= Time.zone.now
-      message_read.save
+      message_read.save!
     end
 
     def read_by?(user)
-      self.message_reads.where(user_id: user.id).count > 0
+      self.message_reads.where(user_id: user.id).where('read_at IS NOT NULL').count > 0
     end
 
     private

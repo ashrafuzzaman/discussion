@@ -27,7 +27,7 @@ module Discussion
     end
 
     def mark_thread_as_read
-      @thread.messages.each { |m| m.read_by!(current_user) }
+      @thread.messages.each { |m| m.read_by!(current_user) if m.persisted? }
     end
   end
 end
