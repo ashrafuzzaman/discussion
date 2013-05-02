@@ -41,7 +41,8 @@ module Discussion
 
     def number_of_read_messages_by(user)
       @number_of_unread_messages ||= {}
-      @number_of_unread_messages[user.id] ||= self.messages.joins(:message_reads).where('discussion_message_reads.user_id = ?', user.id).count
+      @number_of_unread_messages[user.id] ||= self.messages.
+          joins(:message_reads).where('discussion_message_reads.user_id = ? AND discussion_message_reads.read_at IS NOT NULL', user.id).count
     end
 
     def number_of_unread_messages_by(user)
