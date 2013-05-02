@@ -17,9 +17,10 @@ module Discussion
       select("DISTINCT *").joins(:messages => :message_reads).where('discussion_message_reads.user_id = ?', user.id)
     }
 
-    #scope :unread_by, ->(user) {
-    #  select("DISTINCT *").joins(:messages => :message_reads).where('discussion_message_reads.user_id = ?', user.id)
-    #}
+    scope :unread_by, ->(user) {
+      select("DISTINCT *").joins('LEFT OUTER JOIN discussion_concerns ON discussion_concerns.thread_id = discussion_threads.id').
+          where('discussion_message_reads.user_id = ?', user.id)
+    }
 
     scope :order_by_recent, order('discussion_threads.last_posted_at DESC')
 
@@ -27,9 +28,13 @@ module Discussion
       joins('LEFT OUTER JOIN discussion_concerns ON discussion_concerns.thread_id = discussion_threads.id').
           where('discussion_concerns.user_id=:user_id OR discussion_threads.initiator_id=:user_id', user_id: user.id)
     }
+    scope :sent_item_for, ->(user) { where(initiator_id: user.id) }
 
     def read_by?(user)
       number_of_unread_messages_by(user) == 0
+    end
+
+    def self.total_unread_by(user)
     end
 
     def number_of_read_messages_by(user)

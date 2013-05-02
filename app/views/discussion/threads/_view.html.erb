@@ -12,11 +12,11 @@
 
 <%= render :partial => "discussion/messages/view", collection: @thread.messages, as: 'message' %>
 
-<%= simple_form_for([@thread, @thread.messages.build], remote: true) do |f| %>
+<%= simple_form_for([@thread, @thread.messages.build], remote: Discussion.ajaxify) do |f| %>
     <%= f.error_notification %>
     <%= render :partial => "discussion/messages/form", locals: {f: f} %>
 
     <div class="form-actions">
-      <%= link_to "Cancel", threads_path, remote: true %> <%= f.submit %>
+      <%= link_to "Cancel", threads_path, remote: Discussion.ajaxify %> <%= f.submit %>
     </div>
 <% end %>

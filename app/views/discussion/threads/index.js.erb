@@ -1,1 +1,1 @@
-$('#discussion_block').html("<%= escape_javascript(render partial: 'discussion/threads/list') %>");
+$('#<%= Discussion.ajax_wrapper_id %>').html("<%= escape_javascript(render partial: 'discussion/threads/list') %>");
