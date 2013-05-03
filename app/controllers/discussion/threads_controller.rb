@@ -6,7 +6,7 @@ module Discussion
 
     include InheritedResources::DSL
     respond_to :html, :xml, :json, :js
-    actions :all, :except => [:edit, :update]
+    actions :all, :except => [:edit]
     after_filter :mark_all_thread_messages_as_read, only: [:show]
 
     destroy! do |success, failure|
