@@ -7,10 +7,18 @@ module Discussion
     include InheritedResources::DSL
     respond_to :html, :xml, :json, :js
     actions :all, :except => [:edit, :update]
-    after_filter :mark_thread_as_read, only: [:show]
+    after_filter :mark_all_thread_messages_as_read, only: [:show]
 
     destroy! do |success, failure|
       success.js { collection }
+    end
+
+    def show
+      show! do |format|
+        mark_thread_as_read
+        format.html
+        format.js
+      end
     end
 
     protected
@@ -29,6 +37,10 @@ module Discussion
     end
 
     def mark_thread_as_read
+      @thread.thread_reads.by(current_user).update_all(read: true)
+    end
+
+    def mark_all_thread_messages_as_read
       @thread.messages.each { |m| m.read_by!(current_user) if m.persisted? }
     end
   end
