@@ -2,6 +2,8 @@ require_dependency "discussion/application_controller"
 
 module Discussion
   class ThreadsController < InheritedResources::Base
+    before_filter :authenticate_user!
+
     include InheritedResources::DSL
     respond_to :html, :xml, :json, :js
     actions :all, :except => [:edit, :update]

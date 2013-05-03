@@ -1,6 +1,6 @@
 module Discussion
   class Thread < ActiveRecord::Base
-    attr_accessible :subject, :messages_attributes
+    attr_accessible :subject, :messages_attributes, :concern_user_ids
     validates :subject, presence: true
 
     belongs_to :initiator, :class_name => Discussion.user_class

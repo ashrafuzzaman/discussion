@@ -2,6 +2,8 @@ require_dependency "discussion/application_controller"
 
 module Discussion
   class MessagesController < InheritedResources::Base
+    before_filter :authenticate_user!
+
     respond_to :html, :xml, :json, :js
     include InheritedResources::DSL
 
