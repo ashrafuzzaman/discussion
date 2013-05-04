@@ -17,6 +17,7 @@ group :development do
   gem 'lorem_ipsum_amet'
   gem 'bullet'
   gem 'rack-mini-profiler'
+  gem 'redis-rails'
 end
 
 # Declare any dependencies that are still in development here instead of in

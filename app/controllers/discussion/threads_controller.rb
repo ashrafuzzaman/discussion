@@ -6,6 +6,7 @@ module Discussion
     respond_to :html, :xml, :json, :js
     actions :all, :except => [:edit]
     after_filter :mark_all_thread_messages_as_read, only: [:show]
+    cache_sweeper :thread_sweeper
 
     destroy! do |success, failure|
       success.js { collection }
@@ -35,7 +36,7 @@ module Discussion
     end
 
     def mark_thread_as_read
-      @thread.thread_reads.by(current_user).update_all(read: true)
+      @thread.thread_reads.by(current_user).each { |tr| tr.update_attributes(read: true) }
     end
 
     def mark_all_thread_messages_as_read

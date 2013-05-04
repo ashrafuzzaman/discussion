@@ -1,5 +1,5 @@
 <h1>Listing threads</h1>
-
+Ttotal unread thread for <%= current_user.email %> is :: <span><%= Discussion::Thread.total_unread_by(current_user) %></span>
 <%= search_form_for @search, remote: Discussion.ajaxify do |f| %>
     <div class="field">
       <%= f.text_field :subject_cont, placeholder: 'Subject' %>

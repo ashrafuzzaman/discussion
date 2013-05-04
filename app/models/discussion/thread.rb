@@ -39,6 +39,12 @@ module Discussion
       self.thread_reads.by(user).where(read: false).count == 0
     end
 
+    def self.total_unread_by(user)
+      Rails.cache.fetch("total_unread_thread_by_#{user.id}", :expires_in => 10.minutes) do
+        Thread.unread_by(user).count
+      end
+    end
+
     def number_of_read_messages_by(user)
       @number_of_unread_messages ||= {}
       @number_of_unread_messages[user.id] ||= self.messages.
