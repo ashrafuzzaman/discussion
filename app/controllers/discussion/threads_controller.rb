@@ -12,6 +12,11 @@ module Discussion
       success.js { collection }
     end
 
+    create! do |success, failure|
+      mark_thread_as_read
+      success.js { collection }
+    end
+
     def show
       show! do |format|
         mark_thread_as_read
