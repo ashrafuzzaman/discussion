@@ -1,8 +1,5 @@
-source "http://rubygems.org"
+source 'http://rubygems.org'
 
-# Declare your gem's dependencies in discussion.gemspec.
-# Bundler will treat runtime dependencies like base dependencies, and
-# development dependencies will be added by default to the :development group.
 gemspec
 
 # jquery-rails is used by the dummy application
@@ -13,11 +10,15 @@ gem 'kaminari'
 gem 'ransack'
 
 group :development do
-  gem 'awesome_print'
-  gem 'lorem_ipsum_amet'
   gem 'bullet'
   gem 'rack-mini-profiler'
-  gem 'redis-rails'
+end
+
+group :test, :development do
+  gem 'awesome_print'
+  gem 'lorem_ipsum_amet'
+  gem 'rspec-rails'
+  gem 'factory_girl'
 end
 
 # Declare any dependencies that are still in development here instead of in

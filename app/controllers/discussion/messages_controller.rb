@@ -2,6 +2,7 @@ require_dependency "discussion/application_controller"
 
 module Discussion
   class MessagesController < InheritedResources::Base
+    layout Discussion.layout
     respond_to :html, :xml, :json, :js
     include InheritedResources::DSL
 

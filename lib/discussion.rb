@@ -9,4 +9,7 @@ module Discussion
 
   mattr_accessor :ajax_wrapper_id
   self.ajax_wrapper_id = 'discussion_block'
+
+  mattr_accessor :layout
+  self.layout = 'application'
 end

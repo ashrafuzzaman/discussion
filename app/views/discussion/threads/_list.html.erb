@@ -1,11 +1,15 @@
 <h1>Listing threads</h1>
-Ttotal unread thread for <%= current_user.email %> is :: <span><%= Discussion::Thread.total_unread_by(current_user) %></span>
+Ttotal unread thread for <%= current_user.email %> is ::
+<span><%= Discussion::Thread.total_unread_by(current_user) %></span>
 <%= search_form_for @search, remote: Discussion.ajaxify do |f| %>
     <div class="field">
       <%= f.text_field :subject_cont, placeholder: 'Subject' %>
     </div>
     <div class="actions"><%= f.submit "Search" %></div>
 <% end %>
+
+<%= link_to 'All messages', threads_path, remote: true %> |
+<%= link_to 'Sent Item', threads_path(sent_item: true), remote: true %>
 
 <table>
   <tr>
@@ -20,7 +24,7 @@ Ttotal unread thread for <%= current_user.email %> is :: <span><%= Discussion::T
   <% @threads.each do |thread| %>
       <tr class="thread <%= thread.read_by?(current_user) ? 'read' : 'unread' %>">
         <td>
-          <span class="counter">(<%= thread.number_of_unread_messages_by(current_user) %>)</span>
+          <!--<span class="counter">(<%#= thread.number_of_unread_messages_by(current_user) %>)</span>-->
           <%= link_to thread.subject.truncate(80, :omission => "... (continued)"), thread, remote: Discussion.ajaxify %>
         </td>
         <td><%= thread.initiator.try(:email) %></td>

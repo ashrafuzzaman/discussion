@@ -2,6 +2,7 @@ require_dependency "discussion/application_controller"
 
 module Discussion
   class ThreadsController < InheritedResources::Base
+    layout Discussion.layout
     include InheritedResources::DSL
     respond_to :html, :xml, :json, :js
     actions :all, :except => [:edit]
@@ -34,8 +35,13 @@ module Discussion
     end
 
     def collection
-      @threads ||= end_of_association_chain.concerns_with(current_user).order_by_recent.
-          includes(:initiator).page(params[:page])
+      @threads ||= end_of_association_chain.order_by_recent.includes(:initiator)
+      if params[:sent_item] == 'true'
+        @threads = @threads.by_initiator(current_user)
+      else
+        @threads = @threads.concerns_with(current_user)
+      end
+      @threads = @threads.page(params[:page])
       @search = @threads.search(params[:q])
       @threads = @search.result
     end

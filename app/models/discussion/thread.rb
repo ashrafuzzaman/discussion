@@ -20,6 +20,10 @@ module Discussion
       joins(:thread_reads).where('discussion_thread_reads.user_id = ? AND discussion_thread_reads.read = ?', user.id, read)
     }
 
+    scope :by_initiator, ->(user) {
+      where(initiator_id: user.id)
+    }
+
     scope :read_by, ->(user) {
       by_user_and_status(user, true)
     }

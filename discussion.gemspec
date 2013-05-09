@@ -4,20 +4,27 @@ $:.push File.expand_path("../lib", __FILE__)
 require "discussion/version"
 
 # Describe your gem and declare its dependencies:
-Gem::Specification.new do |s|
-  s.name        = "discussion"
-  s.version     = Discussion::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Discussion."
-  s.description = "TODO: Description of Discussion."
+Gem::Specification.new do |gem|
+  gem.name        = "discussion"
+  gem.version     = Discussion::VERSION
+  gem.authors     = ["A.K.M. Ashrafuzzaman"]
+  gem.email       = ["ashrafuzzaman.g2@gmail.com"]
+  gem.homepage    = "https://github.com/ashrafuzzaman/discussion"
+  gem.summary     = "A gem to manage a thread discussion with ajax support."
+  gem.description = ""
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  gem.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
+  gem.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 3.2.13"
+  gem.add_dependency "rails", "~> 3.2.13"
+  gem.add_dependency 'jquery-rails'
+  gem.add_dependency 'simple_form'
+  gem.add_dependency 'inherited_resources'
+  gem.add_dependency 'kaminari'
+  gem.add_dependency 'ransack'
   # s.add_dependency "jquery-rails"
 
-  s.add_development_dependency "sqlite3"
+  gem.add_development_dependency "sqlite3"
+  gem.add_development_dependency "bullet"
+  gem.add_development_dependency "rack-mini-profiler"
 end
