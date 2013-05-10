@@ -1,6 +1,6 @@
 <h1>New thread</h1>
 
-<%= simple_form_for(@thread, remote: Discussion.ajaxify) do |f| %>
+<%= simple_form_for(@thread, url: form_path, remote: Discussion.ajaxify) do |f| %>
     <%= f.error_notification %>
 
     <%= field_set_tag do %>
@@ -11,6 +11,6 @@
     <% end %>
 
     <div class="form-actions">
-      <%= link_to "Cancel", threads_path %>  <%= f.submit %>
+      <%= link_to_threads link_text: "Cancel" %> | <%= f.submit %>
     </div>
 <% end %>

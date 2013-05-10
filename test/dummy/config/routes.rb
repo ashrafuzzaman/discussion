@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  mount Discussion::Engine => "/discussion", as: 'discussion'
 
-  mount Discussion::Engine => "/discussion"
+  resources :assignments do
+    resources :threads, :module => "discussion"
+  end
+
 end

@@ -4,17 +4,22 @@ module Discussion
   class ThreadsController < InheritedResources::Base
     layout Discussion.layout
     include InheritedResources::DSL
+    belongs_to :assignment, :polymorphic => true, :optional => true
+    #TODO: need to make this dynamic
+
     respond_to :html, :xml, :json, :js
     actions :all, :except => [:edit]
     after_filter :mark_all_thread_messages_as_read, only: [:show]
     cache_sweeper :thread_sweeper
 
     destroy! do |success, failure|
+      success.html { redirect_to_list }
       success.js { collection }
     end
 
     create! do |success, failure|
       mark_thread_as_read
+      success.html { redirect_to_list }
       success.js { collection }
     end
 
@@ -27,6 +32,10 @@ module Discussion
     end
 
     protected
+    def redirect_to_list
+      redirect_to parent? ? main_app.polymorphic_url([parent, :threads]) : threads_path
+    end
+
     def build_resource
       super
       @thread.initiator = current_user

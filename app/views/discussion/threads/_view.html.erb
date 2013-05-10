@@ -17,6 +17,6 @@
     <%= render :partial => "discussion/messages/form", locals: {f: f} %>
 
     <div class="form-actions">
-      <%= link_to "Cancel", threads_path, remote: Discussion.ajaxify %> <%= f.submit %>
+      <%= link_to_threads link_text: "Cancel" %> | <%= f.submit %>
     </div>
 <% end %>

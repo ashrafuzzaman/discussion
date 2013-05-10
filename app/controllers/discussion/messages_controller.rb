@@ -10,7 +10,7 @@ module Discussion
     actions :all, :except => [:edit, :update]
 
     create! do |success, failure|
-      success.html { redirect_to @thread }
+      success.html { redirect_to :back }
     end
 
     private

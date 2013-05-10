@@ -1,17 +1,18 @@
 <h1>Listing threads</h1>
 Ttotal unread thread for <%= current_user.email %> is ::
 <span><%= Discussion::Thread.total_unread_by(current_user) %></span>
-<%= search_form_for @search, remote: Discussion.ajaxify do |f| %>
+<%= search_form_for @search, url: path_to_threads, remote: Discussion.ajaxify do |f| %>
+    <%= hidden_field_tag :sent_item, params[:sent_item] %>
     <div class="field">
       <%= f.text_field :subject_cont, placeholder: 'Subject' %>
     </div>
     <div class="actions"><%= f.submit "Search" %></div>
 <% end %>
 
-<%= link_to 'All messages', threads_path, remote: true %> |
-<%= link_to 'Sent Item', threads_path(sent_item: true), remote: true %>
+<%= link_to_threads link_text: 'All messages' %> |
+<%= link_to_threads link_text: 'Sent Item', sent_item: true %>
 
-<table>
+<table class="table ">
   <tr>
     <th>Subject</th>
     <th>Initiator</th>
@@ -25,13 +26,13 @@ Ttotal unread thread for <%= current_user.email %> is ::
       <tr class="thread <%= thread.read_by?(current_user) ? 'read' : 'unread' %>">
         <td>
           <!--<span class="counter">(<%#= thread.number_of_unread_messages_by(current_user) %>)</span>-->
-          <%= link_to thread.subject.truncate(80, :omission => "... (continued)"), thread, remote: Discussion.ajaxify %>
+          <%= link_to_thread thread, link_text: thread.subject.truncate(80, :omission => "... (continued)") %>
         </td>
         <td><%= thread.initiator.try(:email) %></td>
         <td><%= thread.created_at %></td>
         <td><%= thread.last_posted_at %></td>
         <td><%= thread.total_messages_post %></td>
-        <td><%= link_to 'Destroy', thread, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <td><%= link_to_destroy_thread(thread) %></td>
       </tr>
   <% end %>
 </table>
@@ -39,4 +40,4 @@ Ttotal unread thread for <%= current_user.email %> is ::
 <%= paginate @threads, remote: Discussion.ajaxify %>
 <br/>
 
-<%= link_to 'New Thread', new_thread_path, remote: Discussion.ajaxify %>
+<%= link_to_new_thread %>

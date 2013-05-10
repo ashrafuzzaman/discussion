@@ -3,9 +3,9 @@ module Discussion
     attr_accessible :body, :thread_id
     validates :author_id, :body, presence: true
 
-    belongs_to :author, :class_name => Discussion.user_class
-    belongs_to :thread, :class_name => 'Discussion::Thread', :inverse_of => :messages, :counter_cache => :total_messages_post
-    has_many :message_reads, :class_name => 'Discussion::MessageRead'
+    belongs_to :author, class_name: Discussion.user_class
+    belongs_to :thread, class_name: 'Discussion::Thread', inverse_of: :messages, counter_cache: :total_messages_post
+    has_many :message_reads, class_name: 'Discussion::MessageRead'
 
     after_create :update_last_posted_at, :create_message_read_for_concerns
 

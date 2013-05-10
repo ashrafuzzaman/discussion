@@ -5,7 +5,7 @@ module Discussion
   self.user_class = 'User'
 
   mattr_accessor :ajaxify
-  self.ajaxify = true
+  self.ajaxify = false
 
   mattr_accessor :ajax_wrapper_id
   self.ajax_wrapper_id = 'discussion_block'

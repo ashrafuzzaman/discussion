@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130502144148) do
+ActiveRecord::Schema.define(:version => 20130509101334) do
+
+  create_table "assignments", :force => true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "text"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "discussion_concerns", :force => true do |t|
     t.integer  "user_id"
@@ -60,9 +68,13 @@ ActiveRecord::Schema.define(:version => 20130502144148) do
     t.integer  "total_messages_post", :default => 0
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
+    t.integer  "topic_id"
+    t.string   "topic_type"
   end
 
   add_index "discussion_threads", ["initiator_id"], :name => "index_discussion_threads_on_initiator_id"
+  add_index "discussion_threads", ["topic_id"], :name => "index_discussion_threads_on_topic_id"
+  add_index "discussion_threads", ["topic_type"], :name => "index_discussion_threads_on_topic_type"
 
   create_table "users", :force => true do |t|
     t.string   "first_name",             :default => "", :null => false

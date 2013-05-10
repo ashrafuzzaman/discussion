@@ -48,4 +48,5 @@ Dummy::Application.configure do
     Bullet.rails_logger = true
     #Bullet.airbrake = true
   end
+  Rack::MiniProfiler.config.position = 'right'
 end

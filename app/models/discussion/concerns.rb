@@ -1,8 +1,8 @@
 module Discussion
   class Concerns < ActiveRecord::Base
     attr_accessible :thread_id, :user_id
-    belongs_to :thread, :class_name => 'Discussion::Thread'
-    belongs_to :user, :class_name => Discussion.user_class
+    belongs_to :thread, class_name: 'Discussion::Thread'
+    belongs_to :user, class_name: Discussion.user_class
 
     after_create :create_thread_read, :create_message_read_for_messages
 
