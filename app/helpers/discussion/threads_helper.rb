@@ -7,11 +7,11 @@ module Discussion
 
     def path_to_threads(options={})
       sent_item = options[:sent_item].nil? ? nil : (options[:sent_item] ? 'true' : 'false')
-      parent? ? main_app.polymorphic_url([parent, :threads], sent_item: sent_item) : threads_path(sent_item: sent_item)
+      @threadable.present? ? main_app.polymorphic_url([@threadable, :threads], sent_item: sent_item) : threads_path(sent_item: sent_item)
     end
 
     def link_to_thread(thread, options={}, &block)
-      path = parent? ? main_app.polymorphic_url([parent, thread]) : thread_path(thread)
+      path = @threadable.present? ? main_app.polymorphic_url([@threadable, thread]) : thread_path(thread)
       options = {remote: Discussion.ajaxify}.merge(options)
       link_to options[:link_text] || 'Threads', path, options, &block
     end
@@ -22,13 +22,13 @@ module Discussion
     end
 
     def link_to_new_thread(options={}, &block)
-      path = parent? ? main_app.polymorphic_url([:new, parent, :thread]) : new_thread_path
+      path = @threadable.present? ? main_app.polymorphic_url([:new, @threadable, :thread]) : new_thread_path
       options = {remote: Discussion.ajaxify}.merge(options)
       link_to options[:link_text] || 'New Thread', path, options, &block
     end
 
     def form_path
-      parent? ? main_app.polymorphic_url([parent, :threads]) : threads_path
+      @threadable.present? ? main_app.polymorphic_url([@threadable, :threads]) : threads_path
     end
   end
 end

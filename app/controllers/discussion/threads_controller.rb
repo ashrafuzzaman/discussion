@@ -1,50 +1,107 @@
 require_dependency "discussion/application_controller"
 
 module Discussion
-  class ThreadsController < InheritedResources::Base
+  class ThreadsController < ApplicationController
     layout Discussion.layout
-    include InheritedResources::DSL
-    belongs_to :assignment, :polymorphic => true, :optional => true
-    #TODO: need to make this dynamic
-
     respond_to :html, :xml, :json, :js
-    actions :all, :except => [:edit]
-    after_filter :mark_all_thread_messages_as_read, only: [:show]
     cache_sweeper :thread_sweeper
 
-    destroy! do |success, failure|
-      success.html { redirect_to_list }
-      success.js { collection }
-    end
+    before_filter :load_thread, only: [:show, :edit, :update, :destroy]
 
-    create! do |success, failure|
-      mark_thread_as_read
-      success.html { redirect_to_list }
-      success.js { collection }
+    def index
+      @threads = collection
+      respond_with(@threads)
     end
 
     def show
-      show! do |format|
-        mark_thread_as_read
-        format.html
-        format.js
+      mark_thread_as_read
+      mark_all_thread_messages_as_read
+
+      respond_with(@thread)
+    end
+
+    def new
+      build_resource
+      respond_with(@thread)
+    end
+
+    def edit
+    end
+
+    def create
+      build_resource
+      respond_to do |format|
+        if @thread.save
+          mark_thread_as_read
+          format.html { redirect_to_list }
+          format.js { collection }
+          format.json { render json: @thread, status: :created, location: @thread }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @thread.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+
+    def update
+      respond_to do |format|
+        if @thread.update_attributes(params[:thread])
+          format.html { redirect_to @thread, notice: 'Thread was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @thread.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+
+    def destroy
+      @thread.destroy
+      respond_to do |format|
+        format.html { redirect_to_list }
+        format.js { collection }
+        format.json { head :no_content }
       end
     end
 
     protected
+
+    def threadable
+      return @threadable if @threadable
+      params.each do |name, value|
+        if name =~ /(.+)_id$/
+          @threadable = $1.classify.constantize.find(value)
+          return @threadable
+        end
+      end
+      nil
+    end
+
+    def threadable?
+      threadable.present?
+    end
+
+    def thread_builder
+      threadable? ? threadable.threads : Thread
+    end
+
+    def load_thread
+      @thread = thread_builder.find(params[:id])
+    end
+
     def redirect_to_list
-      redirect_to parent? ? main_app.polymorphic_url([parent, :threads]) : threads_path
+      redirect_to threadable? ? main_app.polymorphic_url([@threadable, :threads]) : threads_path
     end
 
     def build_resource
-      super
+      @thread = thread_builder.new(params[:thread])
       @thread.initiator = current_user
       @thread.messages.each { |m| m.author ||= current_user }
       @thread
     end
 
     def collection
-      @threads ||= end_of_association_chain.order_by_recent.includes(:initiator)
+      @threads = thread_builder.order_by_recent.includes(:initiator)
       if params[:sent_item] == 'true'
         @threads = @threads.by_initiator(current_user)
       else
