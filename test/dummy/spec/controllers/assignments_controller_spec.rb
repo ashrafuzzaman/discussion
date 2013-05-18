@@ -13,10 +13,10 @@ require 'spec_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 #
 # Compared to earlier versions of this generator, there is very limited use of
-# stubs and message expectations in this spec.  Stubs are only used when there
+# stubs and comment expectations in this spec.  Stubs are only used when there
 # is no simpler way to get a handle on the object needed for the example.
 # Message expectations are only used when there is no simpler way to specify
-# that an instance is receiving a specific message.
+# that an instance is receiving a specific comment.
 
 describe AssignmentsController do
 
@@ -104,7 +104,7 @@ describe AssignmentsController do
         assignment = Assignment.create! valid_attributes
         # Assuming there are no other assignments in the database, this
         # specifies that the Assignment created on the previous line
-        # receives the :update_attributes message with whatever params are
+        # receives the :update_attributes comment with whatever params are
         # submitted in the request.
         Assignment.any_instance.should_receive(:update_attributes).with({ "title" => "MyString" })
         put :update, {:id => assignment.to_param, :assignment => { "title" => "MyString" }}, valid_session

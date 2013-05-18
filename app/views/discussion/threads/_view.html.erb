@@ -10,11 +10,11 @@
   <%= @thread.initiator.try(:email) %>
 </p>
 
-<%= render :partial => "discussion/messages/view", collection: @thread.messages, as: 'message' %>
+<%= render :partial => "discussion/comments/view", collection: @thread.comments, as: 'comment' %>
 
-<%= simple_form_for([@thread, @thread.messages.build], remote: Discussion.ajaxify) do |f| %>
+<%= simple_form_for([@thread, @thread.comments.build], remote: Discussion.ajaxify) do |f| %>
     <%= f.error_notification %>
-    <%= render :partial => "discussion/messages/form", locals: {f: f} %>
+    <%= render :partial => "discussion/comments/form", locals: {f: f} %>
 
     <div class="form-actions">
       <%= link_to_threads link_text: "Cancel" %> | <%= f.submit %>

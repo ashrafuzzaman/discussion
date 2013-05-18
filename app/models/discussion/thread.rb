@@ -1,19 +1,19 @@
 module Discussion
   class Thread < ActiveRecord::Base
-    attr_accessible :subject, :messages_attributes, :concern_user_ids
+    attr_accessible :subject, :comments_attributes, :concern_user_ids
     validates :subject, presence: true
 
     belongs_to :topic, polymorphic: true
 
     belongs_to :initiator, class_name: Discussion.user_class
-    has_many :messages, class_name: 'Discussion::Message', inverse_of: :thread
+    has_many :comments, class_name: 'Discussion::Comment', inverse_of: :thread
 
     has_many :concerns, class_name: 'Discussion::Concerns'
     has_many :concern_users, through: :concerns, source: Discussion.user_class.underscore.to_sym
 
     has_many :thread_reads, class_name: 'Discussion::ThreadRead'
 
-    accepts_nested_attributes_for :messages
+    accepts_nested_attributes_for :comments
     before_create :add_initiator_to_concerns
 
     # use the count with distinct: true as following
@@ -51,14 +51,14 @@ module Discussion
       end
     end
 
-    def number_of_read_messages_by(user)
-      @number_of_unread_messages ||= {}
-      @number_of_unread_messages[user.id] ||= self.messages.
-          joins(:message_reads).where('discussion_message_reads.user_id = ? AND discussion_message_reads.read_at IS NOT NULL', user.id).count
+    def number_of_read_comments_by(user)
+      @number_of_unread_comments ||= {}
+      @number_of_unread_comments[user.id] ||= self.comments.
+          joins(:comment_reads).where('discussion_comment_reads.user_id = ? AND discussion_comment_reads.read_at IS NOT NULL', user.id).count
     end
 
-    def number_of_unread_messages_by(user)
-      self.total_messages_post - number_of_read_messages_by(user)
+    def number_of_unread_comments_by(user)
+      self.total_comments_post - number_of_read_comments_by(user)
     end
 
     private

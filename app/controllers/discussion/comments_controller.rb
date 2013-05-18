@@ -1,7 +1,7 @@
 require_dependency "discussion/application_controller"
 
 module Discussion
-  class MessagesController < InheritedResources::Base
+  class CommentsController < InheritedResources::Base
     layout Discussion.layout
     respond_to :html, :xml, :json, :js
     include InheritedResources::DSL
@@ -16,8 +16,8 @@ module Discussion
     private
     def build_resource
       super
-      @message.author = current_user
-      @message
+      @comment.author = current_user
+      @comment
     end
   end
 end

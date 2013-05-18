@@ -1,3 +1,0 @@
-<div class="message <%= message.read_by?(current_user) ? 'read' : 'unread' %>">
-  <%= message.author.try(:email) %> | <%= message.body %>
-</div>

@@ -15,7 +15,7 @@ module Discussion
 
     def show
       mark_thread_as_read
-      mark_all_thread_messages_as_read
+      mark_all_thread_comments_as_read
 
       respond_with(@thread)
     end
@@ -96,7 +96,7 @@ module Discussion
     def build_resource
       @thread = thread_builder.new(params[:thread])
       @thread.initiator = current_user
-      @thread.messages.each { |m| m.author ||= current_user }
+      @thread.comments.each { |m| m.author ||= current_user }
       @thread
     end
 
@@ -116,8 +116,8 @@ module Discussion
       @thread.thread_reads.by(current_user).each { |tr| tr.update_attributes(read: true) }
     end
 
-    def mark_all_thread_messages_as_read
-      @thread.messages.each { |m| m.read_by!(current_user) if m.persisted? }
+    def mark_all_thread_comments_as_read
+      @thread.comments.each { |m| m.read_by!(current_user) if m.persisted? }
     end
   end
 end

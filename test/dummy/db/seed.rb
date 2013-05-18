@@ -18,7 +18,7 @@ User.create!(email: 'mamataz@gmail.com')
   t.initiator = rand_user
 
   1.upto(3) do
-    t.messages.build(body: body).author = rand_user
+    t.comments.build(body: body).author = rand_user
   end
 
   t.concerns.build(user_id: rand_user.id)

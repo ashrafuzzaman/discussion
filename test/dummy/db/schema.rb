@@ -21,6 +21,25 @@ ActiveRecord::Schema.define(:version => 20130509101334) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "discussion_comment_reads", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "comment_id"
+    t.datetime "read_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "discussion_comments", :force => true do |t|
+    t.integer  "author_id"
+    t.integer  "thread_id"
+    t.text     "body"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "discussion_comments", ["author_id"], :name => "index_discussion_comments_on_author_id"
+  add_index "discussion_comments", ["thread_id"], :name => "index_discussion_comments_on_thread_id"
+
   create_table "discussion_concerns", :force => true do |t|
     t.integer  "user_id"
     t.integer  "thread_id"
@@ -30,25 +49,6 @@ ActiveRecord::Schema.define(:version => 20130509101334) do
 
   add_index "discussion_concerns", ["thread_id"], :name => "index_discussion_concerns_on_thread_id"
   add_index "discussion_concerns", ["user_id"], :name => "index_discussion_concerns_on_user_id"
-
-  create_table "discussion_message_reads", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "message_id"
-    t.datetime "read_at"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "discussion_messages", :force => true do |t|
-    t.integer  "author_id"
-    t.integer  "thread_id"
-    t.text     "body"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "discussion_messages", ["author_id"], :name => "index_discussion_messages_on_author_id"
-  add_index "discussion_messages", ["thread_id"], :name => "index_discussion_messages_on_thread_id"
 
   create_table "discussion_thread_reads", :force => true do |t|
     t.integer  "thread_id"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(:version => 20130509101334) do
     t.string   "subject"
     t.integer  "initiator_id"
     t.datetime "last_posted_at"
-    t.integer  "total_messages_post", :default => 0
+    t.integer  "total_comments_post", :default => 0
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.integer  "topic_id"

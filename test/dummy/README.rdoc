@@ -54,7 +54,7 @@ running on the server.log and development.log. Rails will automatically display
 debugging and runtime information to these files. Debugging info will also be
 shown in the browser on requests from 127.0.0.1.
 
-You can also log your own messages directly into the log file from your code
+You can also log your own comments directly into the log file from your code
 using the Ruby logger class from inside your controllers. Example:
 
   class WeblogController < ActionController::Base
@@ -65,7 +65,7 @@ using the Ruby logger class from inside your controllers. Example:
     end
   end
 
-The result will be a message in your log file along the lines of:
+The result will be a comment in your log file along the lines of:
 
   Mon Oct 08 14:22:29 +1000 2007 Destroyed Weblog ID #1!
 

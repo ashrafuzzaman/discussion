@@ -4,7 +4,7 @@
       <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
 
       <ul>
-      <% @assignment.errors.full_messages.each do |msg| %>
+      <% @assignment.errors.full_comments.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>

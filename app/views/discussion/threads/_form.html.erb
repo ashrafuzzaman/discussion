@@ -5,8 +5,8 @@
 
     <%= field_set_tag do %>
         <%= f.input :subject %>
-        <%= f.simple_fields_for :messages, [@thread.messages.build] do |mf| %>
-            <%= render :partial => "discussion/messages/form", locals: {f: mf} %>
+        <%= f.simple_fields_for :comments, [@thread.comments.build] do |mf| %>
+            <%= render :partial => "discussion/comments/form", locals: {f: mf} %>
         <% end %>
     <% end %>
 

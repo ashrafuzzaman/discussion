@@ -9,7 +9,7 @@ Ttotal unread thread for <%= current_user.email %> is ::
     <div class="actions"><%= f.submit "Search" %></div>
 <% end %>
 
-<%= link_to_threads link_text: 'All messages' %> |
+<%= link_to_threads link_text: 'All comments' %> |
 <%= link_to_threads link_text: 'Sent Item', sent_item: true %>
 
 <table class="table ">
@@ -18,20 +18,20 @@ Ttotal unread thread for <%= current_user.email %> is ::
     <th>Initiator</th>
     <th><%= sort_link(@search, :created_at, "Initiated on", {}, {remote: Discussion.ajaxify}) %></th>
     <th><%= sort_link(@search, :last_posted_at, "Last post at", {}, {remote: Discussion.ajaxify}) %></th>
-    <th><%= sort_link(@search, :total_messages_post, "Total messages post", {}, {remote: Discussion.ajaxify}) %></th>
+    <th><%= sort_link(@search, :total_comments_post, "Total comments post", {}, {remote: Discussion.ajaxify}) %></th>
     <th></th>
   </tr>
 
   <% @threads.each do |thread| %>
       <tr class="thread <%= thread.read_by?(current_user) ? 'read' : 'unread' %>">
         <td>
-          <!--<span class="counter">(<%#= thread.number_of_unread_messages_by(current_user) %>)</span>-->
+          <!--<span class="counter">(<%#= thread.number_of_unread_comments_by(current_user) %>)</span>-->
           <%= link_to_thread thread, link_text: thread.subject.truncate(80, :omission => "... (continued)") %>
         </td>
         <td><%= thread.initiator.try(:email) %></td>
         <td><%= thread.created_at %></td>
         <td><%= thread.last_posted_at %></td>
-        <td><%= thread.total_messages_post %></td>
+        <td><%= thread.total_comments_post %></td>
         <td><%= link_to_destroy_thread(thread) %></td>
       </tr>
   <% end %>

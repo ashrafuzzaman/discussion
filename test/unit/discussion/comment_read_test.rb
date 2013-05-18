@@ -1,7 +1,7 @@
 require 'test_helper'
 
 module Discussion
-  class MessageTest < ActiveSupport::TestCase
+  class CommentReadTest < ActiveSupport::TestCase
     # test "the truth" do
     #   assert true
     # end
