@@ -31,14 +31,16 @@ ActiveRecord::Schema.define(:version => 20130509101334) do
 
   create_table "discussion_comments", :force => true do |t|
     t.integer  "author_id"
-    t.integer  "thread_id"
+    t.integer  "commentable_id"
+    t.string   "commentable_type", :limit => 32
     t.text     "body"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   add_index "discussion_comments", ["author_id"], :name => "index_discussion_comments_on_author_id"
-  add_index "discussion_comments", ["thread_id"], :name => "index_discussion_comments_on_thread_id"
+  add_index "discussion_comments", ["commentable_id"], :name => "index_discussion_comments_on_commentable_id"
+  add_index "discussion_comments", ["commentable_type"], :name => "index_discussion_comments_on_commentable_type"
 
   create_table "discussion_concerns", :force => true do |t|
     t.integer  "user_id"

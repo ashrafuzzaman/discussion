@@ -11,11 +11,11 @@ module Discussion
 
     private
     def sync_thread_read
-      if self.read_at_changed? or self.id_changed?
-        scope = self.comment.thread.thread_reads.by(self.user_id)
+      if (self.read_at_changed? or self.id_changed?) and self.comment.commentable.kind_of?(Discussion::Thread)
+        scope = self.comment.commentable.thread_reads.by(self.user_id)
         thread_read = scope.first || scope.new
 
-        total_unread = self.comment.thread.comments.joins(:comment_reads).
+        total_unread = self.comment.commentable.comments.joins(:comment_reads).
             where('discussion_comment_reads.read_at IS NULL AND user_id=?', user.id).count(distinct: true)
 
         thread_read.read = total_unread == 0

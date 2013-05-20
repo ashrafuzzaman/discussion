@@ -6,12 +6,12 @@ module Discussion
     belongs_to :topic, polymorphic: true
 
     belongs_to :initiator, class_name: Discussion.user_class
-    has_many :comments, class_name: 'Discussion::Comment', inverse_of: :thread
+    has_many :comments, as: :commentable, dependent: :destroy
 
-    has_many :concerns, class_name: 'Discussion::Concerns'
+    has_many :concerns, class_name: 'Discussion::Concerns', dependent: :destroy
     has_many :concern_users, through: :concerns, source: Discussion.user_class.underscore.to_sym
 
-    has_many :thread_reads, class_name: 'Discussion::ThreadRead'
+    has_many :thread_reads, class_name: 'Discussion::ThreadRead', dependent: :destroy
 
     accepts_nested_attributes_for :comments
     before_create :add_initiator_to_concerns
