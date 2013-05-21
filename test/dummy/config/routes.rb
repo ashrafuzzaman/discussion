@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :assignments do
     resources :threads, :module => "discussion"
+    resources :comments, :module => "discussion"
   end
 
 end

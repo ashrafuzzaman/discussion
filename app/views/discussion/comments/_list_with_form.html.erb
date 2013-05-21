@@ -1,0 +1,10 @@
+<%= render :partial => "discussion/comments/view", collection: commentable.comments.includes(:author), as: 'comment' %>
+
+<%= simple_form_for([commentable, commentable.comments.build], remote: Discussion.ajaxify) do |f| %>
+    <%= f.error_notification %>
+    <%= render :partial => "discussion/comments/form", locals: {f: f} %>
+
+    <div class="form-actions">
+      <%= f.submit %>
+    </div>
+<% end %>

@@ -4,6 +4,7 @@ class CreateAssignments < ActiveRecord::Migration
       t.string :title
       t.string :description
       t.string :text
+      t.integer :total_comments_post, default: 0
 
       t.timestamps
     end
