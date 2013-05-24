@@ -17,8 +17,9 @@ ActiveRecord::Schema.define(:version => 20130509101334) do
     t.string   "title"
     t.string   "description"
     t.string   "text"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "total_comments_post", :default => 0
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   create_table "discussion_comment_reads", :force => true do |t|

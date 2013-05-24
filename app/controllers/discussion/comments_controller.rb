@@ -5,15 +5,11 @@ module Discussion
     layout Discussion.layout
     respond_to :html, :xml, :json, :js
 
-    before_filter :load_comment, only: [:show, :edit, :update, :destroy]
+    before_filter :load_comment, only: [:edit, :update, :destroy]
 
     def index
       @comments = collection
       respond_with(@comments)
-    end
-
-    def show
-      respond_with(@comment)
     end
 
     def new
