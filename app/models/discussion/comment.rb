@@ -9,6 +9,15 @@ module Discussion
 
     after_create :update_last_posted_at, :create_comment_read_for_concerns, :update_total_comments_post
 
+    scope :order_by_recent, order('discussion_comments.created_at DESC')
+
+    #TODO: improve the performance for the ready by
+    def self.load_read_by(comments, user)
+      #comment_ids = comments.collect(:id)
+      #comment_ids
+      #Discussion::CommentRead.where()
+    end
+
     def read_by!(user)
       my_comment_reads = self.comment_reads.where(user_id: user.id, comment_id: self.id)
       comment_read = my_comment_reads.first || my_comment_reads.new
@@ -17,7 +26,7 @@ module Discussion
     end
 
     def read_by?(user)
-      self.comment_reads.where('user_id = ? AND read_at IS NOT NULL', user.id).count > 0
+      @read_already ||= self.comment_reads.where('user_id = ? AND read_at IS NOT NULL', user.id).count > 0
     end
 
     private

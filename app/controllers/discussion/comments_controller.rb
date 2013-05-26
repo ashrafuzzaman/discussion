@@ -10,6 +10,7 @@ module Discussion
     def index
       @comments = collection
       respond_with(@comments)
+      @comments.each { |c| c.read_by!(current_user) }
     end
 
     def new
@@ -92,15 +93,7 @@ module Discussion
     end
 
     def collection
-      @comments = comment_builder.order_by_recent.includes(:initiator)
-      if params[:sent_item] == 'true'
-        @comments = @comments.by_initiator(current_user)
-      else
-        @comments = @comments.concerns_with(current_user)
-      end
-      @comments = @comments.page(params[:page])
-      @search = @comments.search(params[:q])
-      @comments = @search.result
+      @comments = comment_builder.order_by_recent.includes(:author)
     end
   end
 end

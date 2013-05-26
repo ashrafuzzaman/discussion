@@ -19,4 +19,4 @@
 <%= link_to 'Edit', edit_assignment_path(@assignment) %> |
 <%= link_to 'Back', assignments_path %>
 
-<%= load_comments_for(@assignment, lazy: false) %>
+<%= load_comments_for(@assignment, lazy: true) %>
