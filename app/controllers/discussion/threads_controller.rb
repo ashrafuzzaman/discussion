@@ -13,6 +13,11 @@ module Discussion
       respond_with(@threads)
     end
 
+    def list
+      @threads = collection
+      respond_with(@threads)
+    end
+
     def show
       mark_thread_as_read
       mark_all_thread_comments_as_read

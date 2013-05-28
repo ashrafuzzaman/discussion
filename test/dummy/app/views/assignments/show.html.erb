@@ -20,12 +20,13 @@
 <%= link_to 'Back', assignments_path %>
 
 <script type='text/javascript'>
-    $('body').on('loading_comments', '.comments_container', function (e) {
-        console.log('loading_comments');
-    });
-    $('body').on('loaded_comments', '.comments_container', function (e) {
-        console.log('loaded_comments');
-    });
+//    $('body').on('loading_comments', '.comments_container', function (e) {
+//        console.log('loading_comments');
+//    });
+//    $('body').on('loaded_comments', '.comments_container', function (e) {
+//        console.log('loaded_comments');
+//    });
 </script>
 
 <%= load_comments_for(@assignment, remote: true) %>
+<%#= load_threads_for(@assignment, remote: true) %>

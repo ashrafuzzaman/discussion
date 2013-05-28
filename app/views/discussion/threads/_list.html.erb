@@ -1,6 +1,3 @@
-<h1>Listing threads</h1>
-Ttotal unread thread for <%= current_user.email %> is ::
-<span><%= Discussion::Thread.total_unread_by(current_user) %></span>
 <%= search_form_for @search, url: path_to_threads, remote: Discussion.ajaxify do |f| %>
     <%= hidden_field_tag :sent_item, params[:sent_item] %>
     <div class="field">

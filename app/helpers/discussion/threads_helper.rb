@@ -30,5 +30,21 @@ module Discussion
     def form_path
       @threadable.present? ? main_app.polymorphic_url([@threadable, :threads]) : threads_path
     end
+
+    def load_threads_for(topic, options={})
+      remote = options[:remote] || false
+      if remote
+        threads_container_id = "threads-#{Time.now.to_i}"
+        <<-EOF.html_safe
+        <div id='#{threads_container_id}' class="comments_container"></div>
+        <script type='text/javascript'>
+          Disussion.loadComments('#{polymorphic_url([topic, :threads])}', '#{threads_container_id}');
+        </script>
+        EOF
+      else
+        render :partial => "discussion/comments/list_with_form", locals: {topic: topic}
+      end
+    end
+
   end
 end
