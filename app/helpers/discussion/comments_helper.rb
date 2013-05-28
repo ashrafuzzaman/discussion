@@ -1,19 +1,13 @@
 module Discussion
   module CommentsHelper
     def load_comments_for(commentable, options={})
-      lazy = options[:lazy] || false
-      if lazy
+      remote = options[:remote] || false
+      if remote
         comments_container_id = "comments-#{Time.now.to_i}"
         <<-EOF.html_safe
-        <div id='#{comments_container_id}'></div>
+        <div id='#{comments_container_id}' class="comments_container"></div>
         <script type='text/javascript'>
-          //Disussion.loadComments('#{main_app.polymorphic_url([commentable, :comments])}', '#{comments_container_id}');
-          jQuery.ajax({
-            url: '#{main_app.polymorphic_url([commentable, :comments])}',
-            dataType: 'script',
-            data: {contrinerId: '#{comments_container_id}'},
-            type: 'GET'
-          });
+          Disussion.loadComments('#{polymorphic_url([commentable, :comments])}', '#{comments_container_id}');
         </script>
         EOF
       else

@@ -10,4 +10,4 @@
   <%= @thread.initiator.try(:email) %>
 </p>
 
-<%= render :partial => "discussion/comments/list_with_form", locals: {commentable: @thread} %>
+<%= load_comments_for(@thread, lazy: true) %>
