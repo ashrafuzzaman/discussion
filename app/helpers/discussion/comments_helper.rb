@@ -5,7 +5,7 @@ module Discussion
       if remote
         comments_container_id = "comments-#{Time.now.to_i}"
         <<-EOF.html_safe
-        <div id='#{comments_container_id}' class="comments_container"></div>
+        <div id='#{comments_container_id}' class="comments_container">Loading comments ...</div>
         <script type='text/javascript'>
           Disussion.loadComments('#{polymorphic_url([commentable, :comments])}', '#{comments_container_id}');
         </script>
