@@ -33,8 +33,8 @@ module Discussion
 
     def load_threads_for(topic, options={})
       remote = options[:remote] || false
+      threads_container_id = "threads-#{Time.now.to_i}"
       if remote
-        threads_container_id = "threads-#{Time.now.to_i}"
         <<-EOF.html_safe
         <div id='#{threads_container_id}' class="comments_container"></div>
         <script type='text/javascript'>
@@ -42,7 +42,9 @@ module Discussion
         </script>
         EOF
       else
-        render :partial => "discussion/comments/list_with_form", locals: {topic: topic}
+        content_tag :div, id: comments_container_id do
+          render :partial => "discussion/comments/list_with_form", locals: {commentable: commentable, contriner_id: comments_container_id}
+        end
       end
     end
 

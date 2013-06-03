@@ -1,1 +1,2 @@
-$('#<%= params['contrinerId'] %>').html("<%= escape_javascript(render :partial => "discussion/comments/list_with_form", locals: {commentable: @commentable}) %>");
+var container = $('#<%= params[:contrinerId] || Discussion.ajax_wrapper_id %>');
+container.html("<%= escape_javascript(render :partial => "discussion/comments/list_with_form", locals: {commentable: @commentable, contriner_id: params[:contrinerId]}) %>");

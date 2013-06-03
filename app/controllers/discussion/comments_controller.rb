@@ -88,6 +88,7 @@ module Discussion
 
     def build_resource
       @comment = comment_builder.new(params[:comment])
+      @commentable = @comment.commentable
       @comment.author = current_user
       @comment
     end
