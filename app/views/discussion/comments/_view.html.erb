@@ -1,3 +1,11 @@
-<div class="comment <%= comment.read_by?(current_user) ? 'read' : 'unread' %>">
-  <%= comment.author.try(:email) %> | <%= comment.body %>
-</div>
+<li class="arrow-box-left gray <%= comment.read_by?(current_user) ? 'read' : 'unread' %>">
+  <div class="info">
+      <span class="name">
+        <span class="label label-green">Commented by</span> <strong class="indent"><%= comment.author.try(:email) %></strong>
+      </span>
+    <span class="time"><i class="icon-time"></i><%= distance_of_time_in_words_to_now comment.created_at %> ago</span>
+  </div>
+  <div class="content">
+    <blockquote><%= raw comment.body %></blockquote>
+  </div>
+</li>

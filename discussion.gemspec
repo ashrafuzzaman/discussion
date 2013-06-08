@@ -19,7 +19,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency "rails", "~> 3.2.13"
   gem.add_dependency 'jquery-rails'
   gem.add_dependency 'simple_form'
-  gem.add_dependency 'inherited_resources'
   gem.add_dependency 'kaminari'
   gem.add_dependency 'ransack'
   # s.add_dependency "jquery-rails"

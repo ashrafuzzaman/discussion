@@ -5,7 +5,6 @@ gemspec
 # jquery-rails is used by the dummy application
 gem 'jquery-rails'
 gem 'simple_form'
-gem 'inherited_resources'
 gem 'kaminari'
 gem 'ransack'
 

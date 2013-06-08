@@ -1,10 +1,10 @@
-<%= render :partial => "discussion/comments/view", collection: commentable.comments.includes(:author), as: 'comment' %>
+<ul class="chat-box timeline">
+  <%= render :partial => "discussion/comments/view", collection: commentable.comments.includes(:author), as: 'comment' %>
+</ul>
 
-<%= simple_form_for([commentable, commentable.comments.build], remote: Discussion.ajaxify) do |f| %>
-    <%= f.error_notification %>
-    <%= render :partial => "discussion/comments/form", locals: {f: f} %>
 
-    <div class="form-actions">
-      <%= f.submit %>
-    </div>
-<% end %>
+<div class="box closable-chat-box">
+  <%= form_for([commentable, commentable.comments.build], remote: Discussion.ajaxify) do |f| %>
+      <%= render :partial => "discussion/comments/form", locals: {f: f, contriner_id: contriner_id} %>
+  <% end %>
+</div>

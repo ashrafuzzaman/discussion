@@ -1,16 +1,26 @@
 <h1>New thread</h1>
 
-<%= simple_form_for(@thread, url: form_path, remote: Discussion.ajaxify) do |f| %>
+<%= simple_form_for(@thread, remote: Discussion.ajaxify) do |f| %>
     <%= f.error_notification %>
 
-    <%= field_set_tag do %>
-        <%= f.input :subject %>
-        <%= f.simple_fields_for :comments, [@thread.comments.build] do |mf| %>
-            <%= render :partial => "discussion/comments/form", locals: {f: mf} %>
-        <% end %>
-    <% end %>
+    <%= field_set_tag nil, class: 'padded' do %>
+        <div style="margin-bottom: 10px;">
+          <%= f.input_field :concern_user_ids, as: :select, collection: User.all.collect { |u| [u.email, u.id] }, multiple: true, class: "chzn-select" %>
+        </div>
 
-    <div class="form-actions">
-      <%= link_to_threads link_text: "Cancel" %> | <%= f.submit %>
-    </div>
+        <div style="margin-bottom: 10px;">
+          <div class="input-prepend">
+            <a class="add-on" href="#">
+              <i class="icon-envelope"></i>
+            </a>
+            <%= f.input_field :subject, placeholder: 'Thread subject', required: 'required' %>
+          </div>
+        </div>
+
+        <div class="box closable-chat-box">
+          <%= f.simple_fields_for :comments, [@thread.comments.build] do |mf| %>
+              <%= render :partial => "discussion/comments/form", locals: {f: mf} %>
+          <% end %>
+        </div>
+    <% end %>
 <% end %>
