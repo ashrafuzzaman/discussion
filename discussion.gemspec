@@ -23,6 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'ransack'
   # s.add_dependency "jquery-rails"
 
+  gem.add_development_dependency "inherited_resources"
   gem.add_development_dependency "sqlite3"
   gem.add_development_dependency "bullet"
   gem.add_development_dependency "rack-mini-profiler"

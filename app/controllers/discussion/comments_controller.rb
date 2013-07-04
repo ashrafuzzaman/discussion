@@ -1,7 +1,7 @@
 require_dependency "discussion/application_controller"
 
 module Discussion
-  class CommentsController < InheritedResources::Base
+  class CommentsController < ApplicationController
     layout Discussion.layout
     respond_to :html, :xml, :json, :js
 
@@ -24,7 +24,7 @@ module Discussion
     def create
       build_resource
       respond_to do |format|
-        if @comment.save
+        if @comment.save!
           format.html { redirect_to :back }
           format.js { collection }
           format.json { render json: @comment, status: :created, location: @comment }

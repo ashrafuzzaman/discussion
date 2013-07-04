@@ -17,7 +17,7 @@ module Discussion
     end
 
     def link_to_destroy_thread(thread, options={}, &block)
-      if thread.persisted?
+      if thread.try(:persisted?)
         options = {method: :delete, data: {confirm: 'Are you sure?'}, link_text: 'Destroy'}
         link_to_thread(thread, options, &block)
       end

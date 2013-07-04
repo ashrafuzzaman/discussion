@@ -1,7 +1,4 @@
 <div class="box-content padded">
-  <div class="fields">
-    <div class="avatar"><%= current_user.email %></div>
-  </div>
 
   <div class="chat-comment-box">
     <%= f.text_area :body, rows: 5, placeholder: "add a comment (click to expand!)", richtext: true %>
@@ -12,9 +9,4 @@
       <%= f.submit 'Send', class: 'btn btn-blue btn-mini', 'data-disable-with' => 'Sending' %>
     </div>
   </div>
-</div>
-
-<div class="form-actions">
-    <%= link_to_threads link_text:"Go back", class: 'btn btn-default btn-mini', 'after-click-animate' => "after" %>
-    <%= link_to_destroy_thread @thread %>
 </div>
